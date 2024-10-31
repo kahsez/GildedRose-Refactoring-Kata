@@ -29,14 +29,14 @@ public class Item
     {
         if (Quality > 0)
         {
-            Quality = Quality - 1;
+            Quality -= 1;
         }
 
-        SellIn = SellIn - 1;
+        SellIn -= 1;
 
         if (SellIn < 0 && Quality > 0)
         {
-            Quality = Quality - 1;
+            Quality -= 1;
         }
     }
 
@@ -48,24 +48,24 @@ public class Item
     {
         if (Quality < 50)
         {
-            Quality = Quality + 1;
+            Quality += 1;
 
             if (SellIn < 11 && Quality < 50)
             {
-                Quality = Quality + 1;
+                Quality += 1;
             }
 
             if (SellIn < 6 && Quality < 50)
             {
-                Quality = Quality + 1;
+                Quality += 1;
             }
         }
 
-        SellIn = SellIn - 1;
+        SellIn -= 1;
 
         if (SellIn < 0)
         {
-            Quality = Quality - Quality;
+            Quality = 0;
         }
     }
 
@@ -73,14 +73,14 @@ public class Item
     {
         if (Quality < 50)
         {
-            Quality = Quality + 1;
+            Quality += 1;
         }
 
-        SellIn = SellIn - 1;
+        SellIn -= 1;
 
         if (SellIn < 0 && Quality < 50)
         {
-            Quality = Quality + 1;
+            Quality += 1;
         }
     }
 }
