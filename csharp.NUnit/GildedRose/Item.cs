@@ -1,27 +1,4 @@
-﻿using System;
-
-namespace GildedRoseKata;
-
-public class ClampMinQualityToZero : IQualityClamper
-{
-    public int Clamp(int quality)
-    {
-        return Math.Max(0, quality);
-    }
-}
-
-public interface IQualityClamper
-{
-    int Clamp(int quality);
-}
-
-public class ClampMaxQualityTo50 : IQualityClamper
-{
-    public int Clamp(int quality)
-    {
-        return Math.Min(50, quality);
-    }
-}
+﻿namespace GildedRoseKata;
 
 public class Item
 {
