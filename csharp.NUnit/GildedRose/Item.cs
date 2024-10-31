@@ -14,32 +14,39 @@ public class Item
         {
             case "Aged Brie":
                 UpdateAgedBrie();
+                ClampMaxQualityTo50();
                 return;
             case "Backstage passes to a TAFKAL80ETC concert":
-                UpdateBackstagePass();
+                UpdateBackstagePass();        
+                ClampMaxQualityTo50();
                 return;
             case "Sulfuras, Hand of Ragnaros":
                 UpdateSulfuras();
                 return;
             default:
                 UpdateNormalItem();
+                ClampMinQualityToZero();
                 break;
         }
     }
 
     void UpdateNormalItem()
     {
-        if (Quality > 0)
-        {
-            Quality -= 1;
-        }
-
         SellIn -= 1;
 
-        if (SellIn < 0 && Quality > 0)
+        if (SellIn < 0)
+        {
+            Quality -= 2;
+        }
+        else
         {
             Quality -= 1;
         }
+    }
+
+    void ClampMinQualityToZero()
+    {
+        Quality = Math.Max(0, Quality);
     }
 
     void UpdateSulfuras()
@@ -60,9 +67,7 @@ public class Item
                 Quality += 1;
                 break;
         }
-
-        Quality = Math.Min(50, Quality);
-
+        
         SellIn -= 1;
 
         if (SellIn < 0)
@@ -83,7 +88,10 @@ public class Item
         {
             Quality += 1;
         }
+    }
 
+    void ClampMaxQualityTo50()
+    {
         Quality = Math.Min(50, Quality);
     }
 }
