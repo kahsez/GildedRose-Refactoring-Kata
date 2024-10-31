@@ -2,8 +2,31 @@
 
 namespace GildedRoseKata;
 
+public class ClampMinQualityToZero : IQualityClamper
+{
+    public int Clamp(int quality)
+    {
+        return Math.Max(0, quality);
+    }
+}
+
+public interface IQualityClamper
+{
+    int Clamp(int quality);
+}
+
+public class ClampMaxQualityTo50 : IQualityClamper
+{
+    public int Clamp(int quality)
+    {
+        return Math.Min(50, quality);
+    }
+}
+
 public class Item
 {
+    readonly IQualityClamper clampMinQualityToZero = new ClampMinQualityToZero();
+    readonly IQualityClamper clampMaxQualityTo50 = new ClampMaxQualityTo50();
     public string Name { get; set; }
     public int SellIn { get; set; }
     public int Quality { get; set; }
@@ -14,30 +37,20 @@ public class Item
         {
             case "Aged Brie":
                 UpdateAgedBrie();
-                Quality = ClampMaxTo50(Quality);
+                Quality = clampMaxQualityTo50.Clamp(Quality);
                 return;
             case "Backstage passes to a TAFKAL80ETC concert":
                 UpdateBackstagePass();        
-                Quality = ClampMaxTo50(Quality);
+                Quality = clampMaxQualityTo50.Clamp(Quality);
                 return;
             case "Sulfuras, Hand of Ragnaros":
                 UpdateSulfuras();
                 return;
             default:
                 UpdateNormalItem();
-                Quality = ClampMinToZero(Quality);
+                Quality = clampMinQualityToZero.Clamp(Quality);
                 break;
         }
-    }
-
-    int ClampMinToZero(int quality)
-    {
-        return Math.Max(0, quality);
-    }
-
-    int ClampMaxTo50(int quality)
-    {
-        return Math.Min(50, quality);
     }
 
     void UpdateNormalItem()
