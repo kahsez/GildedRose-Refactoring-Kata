@@ -48,20 +48,20 @@ public class Item
 
     void UpdateBackstagePass()
     {
-        if (Quality < 50)
+        switch (SellIn)
         {
-            Quality += 1;
-
-            if (SellIn < 11 && Quality < 50)
-            {
+            case < 6:
+                Quality += 3;
+                break;
+            case < 11:
+                Quality += 2;
+                break;
+            default:
                 Quality += 1;
-            }
-
-            if (SellIn < 6 && Quality < 50)
-            {
-                Quality += 1;
-            }
+                break;
         }
+
+        Quality = Math.Min(50, Quality);
 
         SellIn -= 1;
 
