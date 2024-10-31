@@ -2,11 +2,10 @@
 
 public class Item
 {
-    readonly IQualityClamper clampMinQualityToZero = new ClampMinQualityToZero();
-    readonly IQualityClamper clampMaxQualityTo50 = new ClampMaxQualityTo50();
     public string Name { get; set; }
     public int SellIn { get; set; }
     public int Quality { get; set; }
+    public IQualityClamper Clamper { get; set; }
 
     public void UpdateQuality()
     {
@@ -14,19 +13,21 @@ public class Item
         {
             case "Aged Brie":
                 UpdateAgedBrie();
-                Quality = clampMaxQualityTo50.Clamp(Quality);
-                return;
+                break;
             case "Backstage passes to a TAFKAL80ETC concert":
                 UpdateBackstagePass();        
-                Quality = clampMaxQualityTo50.Clamp(Quality);
-                return;
+                break;
             case "Sulfuras, Hand of Ragnaros":
                 UpdateSulfuras();
-                return;
+                break;
             default:
                 UpdateNormalItem();
-                Quality = clampMinQualityToZero.Clamp(Quality);
                 break;
+        }
+
+        if (Clamper != null)
+        {
+            Quality = Clamper.Clamp(Quality);
         }
     }
 
