@@ -8,25 +8,21 @@ public class Item
 
     public void UpdateQuality()
     {
-        if (Name == "Aged Brie")
+        switch (Name)
         {
-            UpdateAgedBrie();
-            return;
+            case "Aged Brie":
+                UpdateAgedBrie();
+                return;
+            case "Backstage passes to a TAFKAL80ETC concert":
+                UpdateBackstagePass();
+                return;
+            case "Sulfuras, Hand of Ragnaros":
+                UpdateSulfuras();
+                return;
+            default:
+                UpdateNormalItem();
+                break;
         }
-
-        if (Name == "Backstage passes to a TAFKAL80ETC concert")
-        {
-            UpdateBackstagePass();
-            return;
-        }
-
-        if (Name == "Sulfuras, Hand of Ragnaros")
-        {
-            UpdateSulfuras();
-            return;
-        }
-
-        UpdateNormalItem();
     }
 
     void UpdateNormalItem()
