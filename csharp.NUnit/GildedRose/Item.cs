@@ -1,4 +1,6 @@
-﻿namespace GildedRoseKata;
+﻿using System;
+
+namespace GildedRoseKata;
 
 public class Item
 {
@@ -71,16 +73,17 @@ public class Item
 
     void UpdateAgedBrie()
     {
-        if (Quality < 50)
-        {
-            Quality += 1;
-        }
-
         SellIn -= 1;
 
-        if (SellIn < 0 && Quality < 50)
+        if (SellIn < 0)
+        {
+            Quality += 2;
+        }
+        else
         {
             Quality += 1;
         }
+
+        Quality = Math.Min(50, Quality);
     }
 }
