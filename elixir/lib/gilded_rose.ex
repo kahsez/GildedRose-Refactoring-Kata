@@ -7,6 +7,22 @@ defmodule GildedRose do
     Enum.map(items, &update_item/1)
   end
 
+  @spec update_item(Item.t()) :: Item.t()
+  def update_item(item = %Item{name: "Aged Brie"}) do
+    item = cond do
+      item.quality < 50 ->
+        item = %{item | quality: item.quality + 1}
+      true -> item
+    end
+    item = %{item | sell_in: item.sell_in - 1}
+    cond do
+      item.sell_in < 0 && item.quality < 50 ->
+        %{item | quality: item.quality + 1}
+      true -> item
+    end
+  end
+
+  @spec update_item(Item.t()) :: Item.t()
   def update_item(item) do
     item = cond do
       item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert" ->
