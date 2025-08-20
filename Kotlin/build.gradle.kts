@@ -1,7 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-	kotlin("jvm") version "1.9.10"
+	kotlin("jvm") version "2.1.20"
 	application
 }
 
@@ -12,27 +10,30 @@ repositories {
 	mavenCentral()
 }
 
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+}
+
 dependencies {
 	implementation(kotlin("stdlib"))
-	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+	testImplementation(kotlin("test"))
+	testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
 }
 
 tasks.test {
 	useJUnitPlatform()
-	testLogging {
-		events("passed", "skipped", "failed")
-	}
 }
 
-// config JVM target to 1.8 for kotlin compilation tasks
-tasks.withType<KotlinCompile>().configureEach {
-	kotlinOptions.jvmTarget = "1.8"
+tasks.register<JavaExec>("texttest") {
+	description = "Allow you to run text-based approval tests with texttest"
+	group = JavaBasePlugin.BUILD_TASK_NAME
+	mainClass.set("com.gildedrose.TexttestFixtureKt")
+	classpath = sourceSets["test"].runtimeClasspath
+	args("30")
 }
 
-// config java extension to same target version, to avoid build failure on Gradle 8.x
-java {
-	targetCompatibility = JavaVersion.VERSION_1_8
-}
 
 application {
 	mainClass.set("com.gildedrose.TexttestFixtureKt")
