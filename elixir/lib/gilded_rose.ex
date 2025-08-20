@@ -48,6 +48,11 @@ defmodule GildedRose do
   end
 
   @spec update_item(Item.t()) :: Item.t()
+  def update_item(item = %Item{name: "Sulfuras, Hand of Ragnaros"}) do
+    item
+  end
+
+  @spec update_item(Item.t()) :: Item.t()
   def update_item(item) do
     item = cond do
       item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert" ->
