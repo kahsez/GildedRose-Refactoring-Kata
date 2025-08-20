@@ -23,6 +23,31 @@ defmodule GildedRose do
   end
 
   @spec update_item(Item.t()) :: Item.t()
+  def update_item(item = %Item{name: "Backstage passes to a TAFKAL80ETC concert"}) do
+    item = cond do
+      item.quality < 50 ->
+        item = %{item | quality: item.quality + 1}
+        item = cond do
+          item.sell_in < 11 && item.quality < 50 ->
+                %{item | quality: item.quality + 1}
+          true -> item
+        end
+        cond do
+          item.sell_in < 6 && item.quality < 50 ->
+            %{item | quality: item.quality + 1}
+          true -> item
+        end
+      true -> item
+    end
+    item = %{item | sell_in: item.sell_in - 1}
+    cond do
+      item.sell_in < 0 ->
+        %{item | quality: item.quality - item.quality}
+      true -> item
+    end
+  end
+
+  @spec update_item(Item.t()) :: Item.t()
   def update_item(item) do
     item = cond do
       item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert" ->
